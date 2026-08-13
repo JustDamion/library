@@ -9,7 +9,6 @@ libraryGrid.addEventListener("click", (event) => {
     }
 })
 
-
 bookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -25,7 +24,7 @@ bookForm.addEventListener("submit", (event) => {
 
 const library = [];
 
-function Book(title, author, publishYear) {
+function Book(title, author, publishYear, pages, read) {
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
     }
@@ -34,10 +33,12 @@ function Book(title, author, publishYear) {
     this.title = title;
     this.author = author;
     this.publishYear = publishYear;
+    this.pages = pages;
+    this.read = read;
 }
 
-function addBookToLibrary(title, author, publishYear) {
-    const book = new Book(title, author, publishYear);
+function addBookToLibrary(title, author, publishYear, pages, read) {
+    const book = new Book(title, author, publishYear, pages, read);
     library.push(book);
 }
 
@@ -59,29 +60,47 @@ function displayLibrary() {
         const bookRemoveButton = document.createElement("button");
         bookRemoveButton.setAttribute("class", "button book__remove");
         bookRemoveButton.textContent = "X";
+        bookCard.appendChild(bookRemoveButton);
 
         const bookCardTitle = document.createElement("h2");
         bookCardTitle.setAttribute("class", "book__title")
         bookCardTitle.textContent = book.title;
+        bookCard.appendChild(bookCardTitle);
 
         const bookCardAuthor = document.createElement("p");
         bookCardAuthor.setAttribute("class", "book__author")
-        bookCardAuthor.textContent = book.author;
+        bookCardAuthor.textContent = `Author: ${book.author}`;
+        bookCard.appendChild(bookCardAuthor);
 
         const bookCardPublishYear = document.createElement("p");
         bookCardPublishYear.setAttribute("class", "book__publish-year")
-        bookCardPublishYear.textContent = book.publishYear;
-
-        bookCard.appendChild(bookRemoveButton);
-        bookCard.appendChild(bookCardTitle);
-        bookCard.appendChild(bookCardAuthor);
+        bookCardPublishYear.textContent = `Published: ${book.publishYear}`;
         bookCard.appendChild(bookCardPublishYear);
 
+        const bookCardPages = document.createElement("p");
+        bookCardPages.setAttribute("class", "book__pages");
+        bookCardPages.textContent = `Pages: ${book.pages}`;
+        bookCard.appendChild(bookCardPages);
+
+        const bookCardReadContainer = document.createElement("div");
+        const bookCardRead = document.createElement("p");
+        bookCardRead.textContent = "Read:";
+        bookCardRead.setAttribute("class", "book__read");
+        bookCardReadContainer.appendChild(bookCardRead);
+
+        const bookCardReadCheckbox = document.createElement("input");
+        bookCardReadCheckbox.setAttribute("type", "checkbox");
+        bookCardReadCheckbox.setAttribute("class", "book__read-checkbox");
+        bookCardReadCheckbox.setAttribute("disabled", true);
+        bookCardReadCheckbox.checked = book.read;
+        bookCardReadContainer.appendChild(bookCardReadCheckbox);
+
+        bookCard.appendChild(bookCardReadContainer);
         libraryGrid.appendChild(bookCard);
     }
 }
 
-addBookToLibrary("Pride and Prejudice", "Jane Austen", "1832");
-addBookToLibrary("The Count of Monte Cristo", "Alexandre Dumas", "1845");
+addBookToLibrary("Pride and Prejudice", "Jane Austen", "1832", "123", true);
+addBookToLibrary("The Count of Monte Cristo", "Alexandre Dumas", "1845", "596", false);
 console.log(library);
 displayLibrary();

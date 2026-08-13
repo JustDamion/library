@@ -111,6 +111,15 @@ main {
     border-radius: 100%;
 }
 
+.book__read,
+.book__read-checkbox {
+    display: inline-block;
+}
+
+.book__read-checkbox {
+    margin-left: 10px;
+}
+
 .book-form {
     display: grid;
     grid-template-columns: 1fr 2fr;
