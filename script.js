@@ -2,7 +2,7 @@ const libraryGrid = document.getElementById("library");
 const addBookButton = document.getElementById("add-book");
 const addBookModal = document.getElementById("book-modal");
 const addBookForm = document.getElementById("book-form");
-const closeBookModal = document.getElementById("book-modal__close");
+const closeBookModal = document.getElementById("book-modal-close-btn");
 
 libraryGrid.addEventListener("click", (event) => {
     if (event.target.className.includes("book__remove")) {

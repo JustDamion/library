@@ -127,7 +127,7 @@ main {
     flex-direction: column;
 }
 
-.book-form__action {
+.book-form__input {
     margin-bottom: 12px;
 }
 
