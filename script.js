@@ -1,6 +1,22 @@
 const libraryGrid = document.getElementById("library");
+const bookModal = document.getElementById("book-modal");
+const bookForm = document.getElementById("book-form");
+
+bookForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(bookForm);
+    console.log(formData);
+    console.log(formData.get("bookTitle"));
+
+    addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"));
+    displayLibrary();
+
+    bookModal.close();
+})
 
 const library = [];
+const displayedBooks = [];
 
 function Book(title, author, publishYear) {
     if (!new.target) {
@@ -20,6 +36,8 @@ function addBookToLibrary(title, author, publishYear) {
 
 function displayLibrary() {
     for (const book of library) {
+        if (displayedBooks.includes(book)) continue;
+
         const bookCard = document.createElement("div");
         bookCard.setAttribute("class", "book card");
 
@@ -40,6 +58,7 @@ function displayLibrary() {
         bookCard.appendChild(bookCardPublishYear);
 
         libraryGrid.appendChild(bookCard);
+        displayedBooks.push(book);
     }
 }
 

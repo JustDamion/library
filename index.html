@@ -15,6 +15,27 @@
     </header>
 
     <main>
+        <button class="button" commandfor="book-modal" command="show-modal">New book</button>
+
+        <dialog class="book-modal" id="book-modal">
+            <h2 class="book-modal__title">Enter the book information</h2>
+
+            <form class="book-form" id="book-form">
+                <label class="book-form__label" for="bookTitle">Title</label>
+                <input class="book-form__action" type="text" name="bookTitle">
+
+                <label class="book-form__label" for="bookAuthor">Author</label>
+                <input class="book-form__action" type="text" name="bookAuthor">
+
+                <label class="book-form__label" for="bookPublishYear">Year Published</label>
+                <input class="book-form__action" type="text" name="bookPublishYear">
+
+                <button class="button book-form__submit" type="submit">Add Book</button>
+            </form>
+
+            <button class="button book-modal__close" commandfor="book-modal" command="close">Close</button>
+        </dialog>
+
         <section class="library" id="library"></section>
     </main>
 </body>
