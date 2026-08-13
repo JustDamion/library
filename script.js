@@ -40,6 +40,7 @@ function displayLibrary() {
 
         const bookCard = document.createElement("div");
         bookCard.setAttribute("class", "book card");
+        bookCard.setAttribute("data-id", book.id);
 
         const bookCardTitle = document.createElement("h2");
         bookCardTitle.setAttribute("class", "book__title")
