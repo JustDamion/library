@@ -18,6 +18,7 @@
         <button class="button" commandfor="book-modal" command="show-modal">New book</button>
 
         <dialog class="book-modal" id="book-modal">
+            <button class="button book-modal__close" commandfor="book-modal" command="close">X</button>
             <h2 class="book-modal__title">Enter the book information</h2>
 
             <form class="book-form" id="book-form">
@@ -38,8 +39,6 @@
 
                 <button class="button book-form__submit" type="submit">Add Book</button>
             </form>
-
-            <button class="button book-modal__close" commandfor="book-modal" command="close">Close</button>
         </dialog>
 
         <section class="library" id="library">
