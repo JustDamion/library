@@ -7,16 +7,18 @@ libraryGrid.addEventListener("click", (event) => {
         removeBookFromLibrary(event.target.parentNode.dataset.id);
         displayLibrary();
     }
+
+    if (event.target.className.includes("book__update-read")) {
+        updateRead(event.target.parentNode.dataset.id);
+        displayLibrary();
+    }
 })
 
 bookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const formData = new FormData(bookForm);
-    console.log(formData);
-    console.log(formData.get("bookTitle"));
-
-    addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"));
+    addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"), formData.get("bookPages"), formData.get("bookRead"));
     displayLibrary();
 
     bookModal.close();
@@ -46,6 +48,13 @@ function removeBookFromLibrary(bookId) {
     const bookIndex = library.findIndex(book => book.id === bookId);
     if (bookIndex !== -1) {
         library.splice(bookIndex, 1);
+    }
+}
+
+function updateRead(bookId) {
+    const bookIndex = library.findIndex(book => book.id === bookId);
+    if (bookIndex !== -1) {
+        library[bookIndex].read = library[bookIndex].read ? false : true;
     }
 }
 
@@ -96,11 +105,16 @@ function displayLibrary() {
         bookCardReadContainer.appendChild(bookCardReadCheckbox);
 
         bookCard.appendChild(bookCardReadContainer);
+
+        const updateReadButton = document.createElement("button");
+        updateReadButton.setAttribute("class", "button book__update-read");
+        updateReadButton.textContent = "Update Read Status";
+        bookCard.appendChild(updateReadButton);
+
         libraryGrid.appendChild(bookCard);
     }
 }
 
 addBookToLibrary("Pride and Prejudice", "Jane Austen", "1832", "123", true);
 addBookToLibrary("The Count of Monte Cristo", "Alexandre Dumas", "1845", "596", false);
-console.log(library);
 displayLibrary();
