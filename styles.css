@@ -103,6 +103,14 @@ main {
     margin-top: 20px;
 }
 
+.book__remove {
+    padding: 0;
+    align-self: end;
+    width: 1rem;
+    background: none;
+    border-radius: 100%;
+}
+
 .book-form {
     display: grid;
     grid-template-columns: 1fr 2fr;

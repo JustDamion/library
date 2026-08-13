@@ -2,6 +2,14 @@ const libraryGrid = document.getElementById("library");
 const bookModal = document.getElementById("book-modal");
 const bookForm = document.getElementById("book-form");
 
+libraryGrid.addEventListener("click", (event) => {
+    if (event.target.className.includes("book__remove")) {
+        removeBookFromLibrary(event.target.parentNode.dataset.id);
+        displayLibrary();
+    }
+})
+
+
 bookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -16,7 +24,6 @@ bookForm.addEventListener("submit", (event) => {
 })
 
 const library = [];
-const displayedBooks = [];
 
 function Book(title, author, publishYear) {
     if (!new.target) {
@@ -34,13 +41,24 @@ function addBookToLibrary(title, author, publishYear) {
     library.push(book);
 }
 
-function displayLibrary() {
-    for (const book of library) {
-        if (displayedBooks.includes(book)) continue;
+function removeBookFromLibrary(bookId) {
+    const bookIndex = library.findIndex(book => book.id === bookId);
+    if (bookIndex !== -1) {
+        library.splice(bookIndex, 1);
+    }
+}
 
+function displayLibrary() {
+    libraryGrid.textContent = "";
+
+    for (const book of library) {
         const bookCard = document.createElement("div");
         bookCard.setAttribute("class", "book card");
         bookCard.setAttribute("data-id", book.id);
+
+        const bookRemoveButton = document.createElement("button");
+        bookRemoveButton.setAttribute("class", "button book__remove");
+        bookRemoveButton.textContent = "X";
 
         const bookCardTitle = document.createElement("h2");
         bookCardTitle.setAttribute("class", "book__title")
@@ -54,12 +72,12 @@ function displayLibrary() {
         bookCardPublishYear.setAttribute("class", "book__publish-year")
         bookCardPublishYear.textContent = book.publishYear;
 
+        bookCard.appendChild(bookRemoveButton);
         bookCard.appendChild(bookCardTitle);
         bookCard.appendChild(bookCardAuthor);
         bookCard.appendChild(bookCardPublishYear);
 
         libraryGrid.appendChild(bookCard);
-        displayedBooks.push(book);
     }
 }
 
