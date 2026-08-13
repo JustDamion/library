@@ -1,6 +1,8 @@
 const libraryGrid = document.getElementById("library");
-const bookModal = document.getElementById("book-modal");
-const bookForm = document.getElementById("book-form");
+const addBookButton = document.getElementById("add-book");
+const addBookModal = document.getElementById("book-modal");
+const addBookForm = document.getElementById("book-form");
+const closeBookModal = document.getElementById("book-modal__close");
 
 libraryGrid.addEventListener("click", (event) => {
     if (event.target.className.includes("book__remove")) {
@@ -14,14 +16,23 @@ libraryGrid.addEventListener("click", (event) => {
     }
 })
 
-bookForm.addEventListener("submit", (event) => {
+addBookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    const formData = new FormData(bookForm);
+    const formData = new FormData(addBookForm);
     addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"), formData.get("bookPages"), formData.get("bookRead"));
     displayLibrary();
 
-    bookModal.close();
+    addBookForm.requestFullscreen()
+    addBookModal.close();
+})
+
+addBookButton.addEventListener("click", () => {
+    addBookModal.showModal();
+})
+
+closeBookModal.addEventListener("click", () => {
+    addBookModal.close();
 })
 
 const library = [];
@@ -58,7 +69,7 @@ function updateRead(bookId) {
     }
 }
 
-function buildBookCard(book) {
+function createBookCard(book) {
     const bookCard = document.createElement("div");
     bookCard.setAttribute("class", "book card");
     bookCard.setAttribute("data-id", book.id);
@@ -114,7 +125,7 @@ function buildBookCard(book) {
 function displayLibrary() {
     libraryGrid.textContent = "";
     for (const book of library) {
-        buildBookCard(book);
+        createBookCard(book);
     }
 }
 

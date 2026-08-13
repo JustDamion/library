@@ -15,29 +15,31 @@
     </header>
 
     <main>
-        <button class="button" commandfor="book-modal" command="show-modal">New book</button>
+        <button class="button" id="add-book">New book</button>
 
         <dialog class="book-modal" id="book-modal">
-            <button class="button book-modal__close" commandfor="book-modal" command="close">X</button>
-            <h2 class="book-modal__title">Enter the book information</h2>
-
             <form class="book-form" id="book-form">
                 <label class="book-form__label" for="book-title">Title</label>
-                <input class="book-form__action" type="text" name="bookTitle" id="book-title">
+                <input class="book-form__action" type="text" name="bookTitle" id="book-title" required>
 
                 <label class="book-form__label" for="book-author">Author</label>
-                <input class="book-form__action" type="text" name="bookAuthor" id="book-author">
+                <input class="book-form__action" type="text" name="bookAuthor" id="book-author" required>
 
                 <label class="book-form__label" for="book-publish-year">Year Published</label>
-                <input class="book-form__action" type="text" name="bookPublishYear" id="book-publish-year">
+                <input class="book-form__action" type="text" name="bookPublishYear" id="book-publish-year" required>
 
                 <label class="book-form__label" for="book-pages">Pages</label>
-                <input class="book-form__action" type="text" name="bookPages" id="book-pages">
+                <input class="book-form__action" type="text" name="bookPages" id="book-pages" required>
 
-                <label class="book-form__label" for="book-read">Read</label>
-                <input class="book-form__action" type="checkbox" name="bookRead" id="book-read">
+                <div>
+                    <label class="book-form__label" for="book-read">Read</label>
+                    <input class="book-form__action" type="checkbox" name="bookRead" id="book-read">
+                </div>
 
-                <button class="button book-form__submit" type="submit">Add Book</button>
+                <div class="book-form__buttons">
+                    <button class="button book-form__submit" type="submit">Add Book</button>
+                    <button class="button book-modal__close" id="book-modal__close">Cancel</button>
+                </div>
             </form>
         </dialog>
 

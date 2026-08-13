@@ -83,7 +83,7 @@ main {
     padding: 12px 24px;
     background-color: rgb(0, 157, 255);
     border: none;
-    border-radius: 24px;
+    border-radius: 12px;
     cursor: pointer;
 }
 
@@ -119,21 +119,23 @@ main {
 }
 
 .book-modal {
-    padding: 12px 24px;
-}
-
-.book-modal__close {
-    padding: 0;
-    background: none;
-    margin-left: 98%;
+    padding: 16px 32px;
 }
 
 .book-form {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-form__action {
+    margin-bottom: 12px;
 }
 
 .book-form__label {
     justify-self: right;
+}
+
+.book-form__buttons {
+    display: flex;
+    gap: 12px;
 }
