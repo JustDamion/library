@@ -191,6 +191,7 @@ main {
 
 .book__favorite {
     width: 30px;
+    cursor: pointer;
 }
 
 .book__pages,
@@ -210,21 +211,6 @@ main {
 
 .book__finish-date {
     margin-bottom: 24px;
-}
-
-.book__remove {
-    padding: 0;
-    align-self: end;
-    background: none;
-}
-
-.book__read,
-.book__read-checkbox {
-    display: inline-block;
-}
-
-.book__read-checkbox {
-    margin-left: 10px;
 }
 
 .book-modal {
