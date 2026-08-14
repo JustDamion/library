@@ -4,18 +4,6 @@ const addBookModal = document.getElementById("book-modal");
 const addBookForm = document.getElementById("book-form");
 const closeBookModal = document.getElementById("book-modal-close-btn");
 
-libraryGrid.addEventListener("click", (event) => {
-    if (event.target.className.includes("book__remove")) {
-        removeBookFromLibrary(event.target.parentNode.dataset.id);
-        displayLibrary();
-    }
-
-    if (event.target.className.includes("book__update-read")) {
-        updateRead(event.target.parentNode.dataset.id);
-        displayLibrary();
-    }
-})
-
 addBookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -23,7 +11,6 @@ addBookForm.addEventListener("submit", (event) => {
     addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"), formData.get("bookPages"), formData.get("bookRead"));
     displayLibrary();
 
-    addBookForm.requestFullscreen()
     addBookModal.close();
 })
 
@@ -37,21 +24,23 @@ closeBookModal.addEventListener("click", () => {
 
 const library = [];
 
-function Book(title, author, publishYear, pages, read) {
+function Book(title, pages, author, genre, rating, finishDate, status) {
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
     }
 
     this.id = crypto.randomUUID();
     this.title = title;
-    this.author = author;
-    this.publishYear = publishYear;
     this.pages = pages;
-    this.read = read;
+    this.author = author;
+    this.genre = genre;
+    this.rating = rating;
+    this.finishDate = finishDate;
+    this.status = status;
 }
 
-function addBookToLibrary(title, author, publishYear, pages, read) {
-    const book = new Book(title, author, publishYear, pages, read);
+function addBookToLibrary(title, pages, author, genre, rating, finishDate, status) {
+    const book = new Book(title, pages, author, genre, rating, finishDate, status);
     library.push(book);
 }
 
@@ -74,61 +63,64 @@ function createBookCard(book) {
     bookCard.setAttribute("class", "book card");
     bookCard.setAttribute("data-id", book.id);
 
-    const bookRemoveButton = document.createElement("button");
-    bookRemoveButton.setAttribute("class", "button book__remove");
-    bookRemoveButton.textContent = "X";
-    bookCard.appendChild(bookRemoveButton);
-
     const bookCardTitle = document.createElement("h2");
     bookCardTitle.setAttribute("class", "book__title")
     bookCardTitle.textContent = book.title;
     bookCard.appendChild(bookCardTitle);
-
-    const bookCardAuthor = document.createElement("p");
-    bookCardAuthor.setAttribute("class", "book__author")
-    bookCardAuthor.textContent = `Author: ${book.author}`;
-    bookCard.appendChild(bookCardAuthor);
-
-    const bookCardPublishYear = document.createElement("p");
-    bookCardPublishYear.setAttribute("class", "book__publish-year")
-    bookCardPublishYear.textContent = `Published: ${book.publishYear}`;
-    bookCard.appendChild(bookCardPublishYear);
 
     const bookCardPages = document.createElement("p");
     bookCardPages.setAttribute("class", "book__pages");
     bookCardPages.textContent = `Pages: ${book.pages}`;
     bookCard.appendChild(bookCardPages);
 
-    const bookCardReadContainer = document.createElement("div");
-    const bookCardRead = document.createElement("p");
-    bookCardRead.textContent = "Read:";
-    bookCardRead.setAttribute("class", "book__read");
-    bookCardReadContainer.appendChild(bookCardRead);
+    const bookCardAuthor = document.createElement("p");
+    bookCardAuthor.setAttribute("class", "book__author")
+    bookCardAuthor.textContent = `Author: ${book.author}`;
+    bookCard.appendChild(bookCardAuthor);
 
-    const bookCardReadCheckbox = document.createElement("input");
-    bookCardReadCheckbox.setAttribute("type", "checkbox");
-    bookCardReadCheckbox.setAttribute("class", "book__read-checkbox");
-    bookCardReadCheckbox.setAttribute("disabled", true);
-    bookCardReadCheckbox.checked = book.read;
-    bookCardReadContainer.appendChild(bookCardReadCheckbox);
+    const bookCardGenre = document.createElement("p");
+    bookCardGenre.setAttribute("class", "book__genre");
+    bookCardGenre.textContent = `Genre: ${book.genre}`;
+    bookCard.appendChild(bookCardGenre);
 
-    bookCard.appendChild(bookCardReadContainer);
+    const bookCardRating = document.createElement("p");
+    bookCardRating.setAttribute("class", "book__rating");
+    bookCardRating.textContent = `Rating: ${book.rating ? book.rating : "-"} / 10`;
+    bookCard.appendChild(bookCardRating);
 
-    const updateReadButton = document.createElement("button");
-    updateReadButton.setAttribute("class", "button book__update-read");
-    updateReadButton.textContent = "Update Read Status";
-    bookCard.appendChild(updateReadButton);
+    const bookCardFinishDate = document.createElement("p");
+    bookCardFinishDate.setAttribute("class", "book__finish-date");
+    bookCardFinishDate.textContent = `Finish Date: ${book.finishDate ? book.finishDate : "N / A"}`
+    bookCard.appendChild(bookCardFinishDate);
+
+    const bookCardStatus = document.createElement("p");
+    bookCardStatus.setAttribute("class", "book__status");
+    bookCardStatus.textContent = book.status;
+    bookCard.appendChild(bookCardStatus);
+
+    libraryGrid.appendChild(bookCard);
+}
+
+function createNewBookCard() {
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("class", "book card new-book__card");
+
+    const bookCardNewButton = document.createElement("button");
+    bookCardNewButton.setAttribute("class", "button new-book__action");
+    bookCardNewButton.setAttribute("id", "add-book");
+    bookCardNewButton.textContent = "New Book +";
+    bookCard.appendChild(bookCardNewButton);
 
     libraryGrid.appendChild(bookCard);
 }
 
 function displayLibrary() {
-    libraryGrid.textContent = "";
+    libraryGrid.replaceChildren(libraryGrid.firstElementChild)
     for (const book of library) {
         createBookCard(book);
     }
 }
 
-addBookToLibrary("Pride and Prejudice", "Jane Austen", "1832", "123", true);
-addBookToLibrary("The Count of Monte Cristo", "Alexandre Dumas", "1845", "596", false);
+addBookToLibrary("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "Reading");
+addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "Finished");
 displayLibrary();

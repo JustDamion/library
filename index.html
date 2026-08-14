@@ -10,52 +10,96 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="header__title">Library</h1>
+    <header class="header">
+        <div class="header__branding">
+            <img class="header__logo" src="images/logo.webp" alt="" width="160" height="160">
+            <h1 class="header__title">My Library</h1>
+            <div class="card header__stats">
+                <p>Books read: 0</p>
+                <p>Books to be read: 0</p>
+                <p>Total books in library: 0</p>
+            </div>
+        </div>
+
+        <div class="header__settings">
+            <img class="header__edit" src="images/edit.svg" alt="Edit library">
+            <img class="header__avatar" src="images/avatar.svg" alt="Account picture">
+        </div>
     </header>
 
     <main>
-        <button class="button" id="add-book">New book</button>
+        <div class="filter-buttons">
+            <button class="button">Sort By</button>
+            <button class="button">Filter</button>
+        </div>
 
         <dialog class="book-modal" id="book-modal">
+            <button class="button book-modal__close" id="book-modal-close-btn">X</button>
+            <h2 class="book-modal__title">New Book</h2>
+
             <form class="book-form" id="book-form">
-                <label class="book-form__label" for="book-title">Title</label>
-                <input class="book-form__input" type="text" name="bookTitle" id="book-title" required>
-
-                <label class="book-form__label" for="book-author">Author</label>
-                <input class="book-form__input" type="text" name="bookAuthor" id="book-author" required>
-
-                <label class="book-form__label" for="book-publish-year">Year Published</label>
-                <input class="book-form__input" type="text" name="bookPublishYear" id="book-publish-year" required>
-
-                <label class="book-form__label" for="book-pages">Pages</label>
-                <input class="book-form__input" type="text" name="bookPages" id="book-pages" required>
-
-                <div>
-                    <label class="book-form__label" for="book-read">Read</label>
-                    <input class="book-form__input" type="checkbox" name="bookRead" id="book-read">
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-title">Title:</label>
+                    <input class="book-form__input" type="text" name="bookTitle" id="book-title" required>
                 </div>
 
-                <div class="book-form__buttons">
-                    <button class="button book-form__submit" type="submit">Add Book</button>
-                    <button class="button book-modal__close" id="book-modal-close-btn">Cancel</button>
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-author">Author:</label>
+                    <input class="book-form__input" type="text" name="bookAuthor" id="book-author" required>
                 </div>
+
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-pages">Pages:</label>
+                    <input class="book-form__input" type="text" name="bookPages" id="book-pages" required>
+                </div>
+
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-genre">Genre:</label>
+                    <input class="book-form__input" type="text" name="bookGenre" id="book-genre">
+                </div>
+
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-rating">Rating:</label>
+                    <input class="book-form__input" type="text" name="bookRating" id="book-rating">
+                </div>
+
+                <div class="book-form__entry">
+                    <label class="book-form__label" for="book-date-finished">Date Finished:</label>
+                    <input class="book-form__input" type="text" name="bookDateFinished" id="book-date-finished">
+                </div>
+
+                <fieldset class="book-form__status">
+                    <div>
+                        <input class="book-form__input" type="radio" name="bookStage" id="book-dnf" value="dnf">
+                        <label class="book-form__label" for="book-dnf">DNF</label>
+                    </div>
+
+                    <div>
+                        <input class="book-form__input" type="radio" name="bookStage" id="book-tbr" value="tbr">
+                        <label class="book-form__label" for="book-tbr">TBR</label>
+                    </div>
+
+                    <div>
+                        <input class="book-form__input" type="radio" name="bookStage" id="book-in-progress"
+                            value="inProgress">
+                        <label class="book-form__label" for="book-in-progress">In progress</label>
+                    </div>
+
+                    <div>
+                        <input class="book-form__input" type="radio" name="bookStage" id="book-finished"
+                            value="finished" checked>
+                        <label class="book-form__label" for="book-finished">Finished</label>
+                    </div>
+                </fieldset>
+
+                <button class="button book-form__submit" type="submit">Add Book +</button>
             </form>
         </dialog>
 
         <section class="library" id="library">
-            <!-- <div class="book card">
-                <button class="button book__remove">X</button>
-                <h2 class="book__title">Test</h2>
-                <p class="book__author">Test</p>
-                <p class="book__publish-year">1234</p>
-                <p class="book__pages">984</p>
-                <div>
-                    <p class="book__read">Read</p>
-                    <input class="book__read-checkbox" type="checkbox" disabled>
-                </div>
-                <button class="button book__update-read">Update Read Status</button>
-            </div> -->
+            <div class="book card new-book__card">
+                <button class="button new-book__action" id="add-book">New Book +</button>
+            </div>
         </section>
     </main>
 </body>
