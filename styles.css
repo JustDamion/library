@@ -146,6 +146,19 @@ main {
     width: 80px;
 }
 
+.data-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.data__sort,
+.data__filter {
+    padding: 4px 12px;
+    background-color: var(--c-off-white-2);
+    border-radius: 20px;
+}
+
 .library {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(225px, 300px));
