@@ -58,11 +58,26 @@ function removeBookFromLibrary(bookId) {
     }
 }
 
-function updateRead(bookId) {
-    const bookIndex = library.findIndex(book => book.id === bookId);
-    if (bookIndex !== -1) {
-        library[bookIndex].read = library[bookIndex].read ? false : true;
+function updateStats() {
+    const booksFinished = document.getElementById("stats-finished");
+    const booksUnfinished = document.getElementById("stats-unfinished");
+    const totalBooks = document.getElementById("stats-total");
+
+    let finishedCounter = 0;
+    let unfinishedCounter = 0;
+
+    for (let i = 0; i < library.length; i++) {
+        console.log(library[i]);
+        if (library[i].status === "finished") {
+            finishedCounter++;
+        } else {
+            unfinishedCounter++;
+        }
     }
+
+    booksFinished.textContent = finishedCounter;
+    booksUnfinished.textContent = unfinishedCounter;
+    totalBooks.textContent = library.length;
 }
 
 function createBookCard(book) {
@@ -75,7 +90,7 @@ function createBookCard(book) {
             status = "To be read"
             break;
         case "inProgress":
-            status = "In progress"
+            status = "Reading"
             break;
         case "finished":
             status = "Finished"
@@ -146,11 +161,12 @@ function createNewBookCard() {
 
 function displayLibrary() {
     libraryGrid.replaceChildren(libraryGrid.firstElementChild)
+    updateStats();
     for (const book of library) {
         createBookCard(book);
     }
 }
 
-addBookToLibrary("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "Reading");
-addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "Finished");
+addBookToLibrary("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "inProgress");
+addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "finished");
 displayLibrary();
