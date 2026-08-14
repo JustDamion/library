@@ -169,10 +169,15 @@ main {
     box-shadow: 5px 5px 0 var(--c-brown-4);
 }
 
-.book__top-line {
+.book__top-line,
+.book__bottom-line {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.book__favorite {
+    width: 30px;
 }
 
 .book__pages,

@@ -31,7 +31,7 @@ closeBookModal.addEventListener("click", () => {
 
 const library = [];
 
-function Book(title, pages, author, genre, rating, finishDate, status) {
+function Book(title, pages, author, genre, rating, finishDate, status, favorite) {
     if (!new.target) {
         throw Error("You must use the 'new' operator to call the constructor");
     }
@@ -44,10 +44,11 @@ function Book(title, pages, author, genre, rating, finishDate, status) {
     this.rating = rating;
     this.finishDate = finishDate;
     this.status = status;
+    this.favorite = favorite;
 }
 
-function addBookToLibrary(title, pages, author, genre, rating, finishDate, status) {
-    const book = new Book(title, pages, author, genre, rating, finishDate, status);
+function addBookToLibrary(title, pages, author, genre, rating, finishDate, status, favorite = false) {
+    const book = new Book(title, pages, author, genre, rating, finishDate, status, favorite);
     library.push(book);
 }
 
@@ -67,7 +68,6 @@ function updateStats() {
     let unfinishedCounter = 0;
 
     for (let i = 0; i < library.length; i++) {
-        console.log(library[i]);
         if (library[i].status === "finished") {
             finishedCounter++;
         } else {
@@ -138,10 +138,21 @@ function createBookCard(book) {
     bookCardFinishDate.textContent = `Finish Date: ${book.finishDate ? book.finishDate : "N / A"}`
     bookCard.appendChild(bookCardFinishDate);
 
+    const bookCardBottomLine = document.createElement("div");
+    bookCardBottomLine.setAttribute("class", "book__bottom-line");
+
     const bookCardStatus = document.createElement("p");
     bookCardStatus.setAttribute("class", "book__status");
     bookCardStatus.textContent = status;
-    bookCard.appendChild(bookCardStatus);
+    bookCardBottomLine.appendChild(bookCardStatus);
+
+    const bookCardFavorite = document.createElement("img");
+    bookCardFavorite.setAttribute("class", "book__favorite");
+    bookCardFavorite.setAttribute("src", book.favorite ? "images/favorite-fill.svg" : "images/favorite-outline.svg");
+    bookCardFavorite.setAttribute("alt", "Favorite this book");
+    bookCardBottomLine.appendChild(bookCardFavorite);
+
+    bookCard.appendChild(bookCardBottomLine);
 
     libraryGrid.appendChild(bookCard);
 }
@@ -168,5 +179,5 @@ function displayLibrary() {
 }
 
 addBookToLibrary("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "inProgress");
-addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "finished");
+addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "finished", true);
 displayLibrary();
