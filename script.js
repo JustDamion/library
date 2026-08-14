@@ -8,7 +8,14 @@ addBookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const formData = new FormData(addBookForm);
-    addBookToLibrary(formData.get("bookTitle"), formData.get("bookAuthor"), formData.get("bookPublishYear"), formData.get("bookPages"), formData.get("bookRead"));
+    addBookToLibrary(
+        formData.get("bookTitle"),
+        formData.get("bookAuthor"),
+        formData.get("bookPages"),
+        formData.get("bookGenre"),
+        formData.get("bookRating"),
+        formData.get("bookDateFinished"),
+        formData.get("bookStage"));
     displayLibrary();
 
     addBookModal.close();
@@ -120,7 +127,7 @@ function createNewBookCard() {
 }
 
 function displayLibrary() {
-    // libraryGrid.replaceChildren(libraryGrid.firstElementChild)
+    libraryGrid.replaceChildren(libraryGrid.firstElementChild)
     for (const book of library) {
         createBookCard(book);
     }
