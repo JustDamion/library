@@ -66,6 +66,24 @@ function updateRead(bookId) {
 }
 
 function createBookCard(book) {
+    let status = "Unknown"
+    switch (book.status) {
+        case "dnf":
+            status = "Did not finish"
+            break;
+        case "tbr":
+            status = "To be read"
+            break;
+        case "inProgress":
+            status = "In progress"
+            break;
+        case "finished":
+            status = "Finished"
+            break;
+        default:
+            status = "Finished"
+    }
+
     const bookCard = document.createElement("div");
     bookCard.setAttribute("class", "book card");
     bookCard.setAttribute("data-id", book.id);
@@ -107,7 +125,7 @@ function createBookCard(book) {
 
     const bookCardStatus = document.createElement("p");
     bookCardStatus.setAttribute("class", "book__status");
-    bookCardStatus.textContent = book.status;
+    bookCardStatus.textContent = status;
     bookCard.appendChild(bookCardStatus);
 
     libraryGrid.appendChild(bookCard);
