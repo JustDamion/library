@@ -63,19 +63,24 @@ function createBookCard(book) {
     bookCard.setAttribute("class", "book card");
     bookCard.setAttribute("data-id", book.id);
 
+    const bookCardTopLine = document.createElement("div");
+    bookCardTopLine.setAttribute("class", "book__top-line");
+
     const bookCardTitle = document.createElement("h2");
     bookCardTitle.setAttribute("class", "book__title")
     bookCardTitle.textContent = book.title;
-    bookCard.appendChild(bookCardTitle);
+    bookCardTopLine.appendChild(bookCardTitle);
 
     const bookCardPages = document.createElement("p");
     bookCardPages.setAttribute("class", "book__pages");
     bookCardPages.textContent = `Pages: ${book.pages}`;
-    bookCard.appendChild(bookCardPages);
+    bookCardTopLine.appendChild(bookCardPages);
+
+    bookCard.appendChild(bookCardTopLine);
 
     const bookCardAuthor = document.createElement("p");
     bookCardAuthor.setAttribute("class", "book__author")
-    bookCardAuthor.textContent = `Author: ${book.author}`;
+    bookCardAuthor.textContent = `By: ${book.author}`;
     bookCard.appendChild(bookCardAuthor);
 
     const bookCardGenre = document.createElement("p");
@@ -115,7 +120,7 @@ function createNewBookCard() {
 }
 
 function displayLibrary() {
-    libraryGrid.replaceChildren(libraryGrid.firstElementChild)
+    // libraryGrid.replaceChildren(libraryGrid.firstElementChild)
     for (const book of library) {
         createBookCard(book);
     }

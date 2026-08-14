@@ -169,6 +169,31 @@ main {
     box-shadow: 5px 5px 0 var(--c-brown-4);
 }
 
+.book__top-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.book__pages,
+.book__author {
+    font-size: 0.8rem;
+}
+
+.book__genre {
+    margin-bottom: 24px;
+}
+
+.book__rating,
+.book__finish-date,
+.book__status {
+    font-size: 1.4rem;
+}
+
+.book__finish-date {
+    margin-bottom: 24px;
+}
+
 .book__remove {
     padding: 0;
     align-self: end;
