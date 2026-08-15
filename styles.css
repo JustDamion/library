@@ -189,9 +189,14 @@ main {
     justify-content: space-between;
 }
 
+.book__favorite-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 .book__favorite {
     width: 30px;
-    cursor: pointer;
 }
 
 .book__pages,

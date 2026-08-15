@@ -4,6 +4,18 @@ const addBookModal = document.getElementById("book-modal");
 const addBookForm = document.getElementById("book-form");
 const closeBookModal = document.getElementById("book-modal-close-btn");
 
+libraryGrid.addEventListener("click", (event) => {
+    const favoriteButtonEl = event.target.parentNode;
+    const bottomLineEl = favoriteButtonEl.parentNode;
+    const bookCardEl = bottomLineEl.parentNode;
+
+    if (favoriteButtonEl.className.includes("book__favorite-button")) {
+        const targetBook = findBookInLibrary(bookCardEl.dataset.id);
+        targetBook.updateFavorite();
+        displayLibrary();
+    }
+})
+
 addBookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -45,6 +57,19 @@ function Book(title, pages, author, genre, rating, finishDate, status, favorite)
     this.finishDate = finishDate;
     this.status = status;
     this.favorite = favorite;
+}
+
+Book.prototype.updateFavorite = function () {
+    this.favorite = this.favorite ? false : true;
+}
+
+function findBookInLibrary(bookId) {
+    const bookIndex = library.findIndex(book => book.id === bookId);
+    if (bookIndex !== -1) {
+        return library[bookIndex];
+    }
+
+    return { value: "No book found", inputId: bookId }
 }
 
 function addBookToLibrary(title, pages, author, genre, rating, finishDate, status, favorite = false) {
@@ -109,34 +134,26 @@ function createBookCard(book) {
     const bookCardTitle = document.createElement("h2");
     bookCardTitle.setAttribute("class", "book__title")
     bookCardTitle.textContent = book.title;
-    bookCardTopLine.appendChild(bookCardTitle);
 
     const bookCardPages = document.createElement("p");
     bookCardPages.setAttribute("class", "book__pages");
     bookCardPages.textContent = `Pages: ${book.pages}`;
-    bookCardTopLine.appendChild(bookCardPages);
-
-    bookCard.appendChild(bookCardTopLine);
 
     const bookCardAuthor = document.createElement("p");
     bookCardAuthor.setAttribute("class", "book__author")
     bookCardAuthor.textContent = `By: ${book.author}`;
-    bookCard.appendChild(bookCardAuthor);
 
     const bookCardGenre = document.createElement("p");
     bookCardGenre.setAttribute("class", "book__genre");
     bookCardGenre.textContent = `Genre: ${book.genre}`;
-    bookCard.appendChild(bookCardGenre);
 
     const bookCardRating = document.createElement("p");
     bookCardRating.setAttribute("class", "book__rating");
     bookCardRating.textContent = `Rating: ${book.rating ? book.rating : "-"} / 10`;
-    bookCard.appendChild(bookCardRating);
 
     const bookCardFinishDate = document.createElement("p");
     bookCardFinishDate.setAttribute("class", "book__finish-date");
     bookCardFinishDate.textContent = `Finish Date: ${book.finishDate ? book.finishDate : "N / A"}`
-    bookCard.appendChild(bookCardFinishDate);
 
     const bookCardBottomLine = document.createElement("div");
     bookCardBottomLine.setAttribute("class", "book__bottom-line");
@@ -144,14 +161,27 @@ function createBookCard(book) {
     const bookCardStatus = document.createElement("p");
     bookCardStatus.setAttribute("class", "book__status");
     bookCardStatus.textContent = status;
-    bookCardBottomLine.appendChild(bookCardStatus);
+
+    const bookCardFavoriteButton = document.createElement("button");
+    bookCardFavoriteButton.setAttribute("class", "book__favorite-button");
 
     const bookCardFavorite = document.createElement("img");
     bookCardFavorite.setAttribute("class", "book__favorite");
     bookCardFavorite.setAttribute("src", book.favorite ? "images/favorite-fill.svg" : "images/favorite-outline.svg");
     bookCardFavorite.setAttribute("alt", "Favorite this book");
-    bookCardBottomLine.appendChild(bookCardFavorite);
 
+    bookCardTopLine.appendChild(bookCardTitle);
+    bookCardTopLine.appendChild(bookCardPages);
+    bookCard.appendChild(bookCardTopLine);
+
+    bookCard.appendChild(bookCardGenre);
+    bookCard.appendChild(bookCardAuthor);
+    bookCard.appendChild(bookCardRating);
+    bookCard.appendChild(bookCardFinishDate);
+
+    bookCardBottomLine.appendChild(bookCardStatus);
+    bookCardFavoriteButton.appendChild(bookCardFavorite);
+    bookCardBottomLine.append(bookCardFavoriteButton);
     bookCard.appendChild(bookCardBottomLine);
 
     libraryGrid.appendChild(bookCard);
