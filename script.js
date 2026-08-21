@@ -4,6 +4,49 @@ const addBookModal = document.getElementById("book-modal");
 const addBookForm = document.getElementById("book-form");
 const closeBookModal = document.getElementById("book-modal-close-btn");
 
+class Book {
+    favorite = false;
+
+    constructor(title, pages, author, genre, rating, finishDate, status) {
+        this.title = title;
+        this.pages = pages;
+        this.author = author;
+        this.genre = genre;
+        this.rating = rating;
+        this.finishDate = finishDate;
+        this.status = status;
+    }
+
+    updateFavorite() {
+        this.favorite = this.favorite ? false : true;
+    }
+};
+
+const Library = class {
+    static books = [];
+
+    static addBook(title, pages, author, genre, rating, finishDate, status) {
+        const book = new Book(title, pages, author, genre, rating, finishDate, status);
+        this.books.push(book);
+    }
+
+    static removeBook(bookId) {
+        const bookIndex = books.findIndex(book => book.id === bookId);
+        if (bookIndex !== -1) {
+            this.books.splice(bookIndex, 1);
+        }
+    }
+
+    static findBook(bookId) {
+        const bookIndex = books.findIndex(book => book.id === bookId);
+        if (bookIndex !== -1) {
+            return this.books[bookIndex];
+        }
+
+        return { value: "No book found", inputId: bookId }
+    }
+};
+
 libraryGrid.addEventListener("click", (event) => {
     const favoriteButtonEl = event.target.parentNode;
     const bottomLineEl = favoriteButtonEl.parentNode;
@@ -20,7 +63,7 @@ addBookForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const formData = new FormData(addBookForm);
-    addBookToLibrary(
+    Library.addBook(
         formData.get("bookTitle"),
         formData.get("bookAuthor"),
         formData.get("bookPages"),
@@ -40,49 +83,6 @@ addBookButton.addEventListener("click", () => {
 closeBookModal.addEventListener("click", () => {
     addBookModal.close();
 })
-
-const library = [];
-
-function Book(title, pages, author, genre, rating, finishDate, status, favorite) {
-    if (!new.target) {
-        throw Error("You must use the 'new' operator to call the constructor");
-    }
-
-    this.id = crypto.randomUUID();
-    this.title = title;
-    this.pages = pages;
-    this.author = author;
-    this.genre = genre;
-    this.rating = rating;
-    this.finishDate = finishDate;
-    this.status = status;
-    this.favorite = favorite;
-}
-
-Book.prototype.updateFavorite = function () {
-    this.favorite = this.favorite ? false : true;
-}
-
-function findBookInLibrary(bookId) {
-    const bookIndex = library.findIndex(book => book.id === bookId);
-    if (bookIndex !== -1) {
-        return library[bookIndex];
-    }
-
-    return { value: "No book found", inputId: bookId }
-}
-
-function addBookToLibrary(title, pages, author, genre, rating, finishDate, status, favorite = false) {
-    const book = new Book(title, pages, author, genre, rating, finishDate, status, favorite);
-    library.push(book);
-}
-
-function removeBookFromLibrary(bookId) {
-    const bookIndex = library.findIndex(book => book.id === bookId);
-    if (bookIndex !== -1) {
-        library.splice(bookIndex, 1);
-    }
-}
 
 function updateStats() {
     const booksFinished = document.getElementById("stats-finished");
@@ -203,11 +203,11 @@ function createNewBookCard() {
 function displayLibrary() {
     libraryGrid.replaceChildren(libraryGrid.firstElementChild)
     updateStats();
-    for (const book of library) {
+    for (const book of Library.books) {
         createBookCard(book);
     }
 }
 
-addBookToLibrary("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "inProgress");
-addBookToLibrary("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "finished", true);
+Library.addBook("Mad Honey", "464", "Jodi Picoult & Jennifer Finney Bolan", "Mystery", null, null, "inProgress");
+Library.addBook("Atomic Habits", "320", "James Clear", "Self Help", "7", "4/12/26", "finished", true);
 displayLibrary();
